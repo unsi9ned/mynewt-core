@@ -11,6 +11,8 @@
 
 #if defined(STM32F746xx)
  #define MCU_NUM_PERIPH_VECTORS 98
+#elif defined(STM32F756xx)
+ #define MCU_NUM_PERIPH_VECTORS 98
 #elif defined(STM32F767xx)
  #define MCU_NUM_PERIPH_VECTORS 110
 #else

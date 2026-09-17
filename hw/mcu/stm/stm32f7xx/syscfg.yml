@@ -61,6 +61,46 @@ syscfg.defs:
         value:  0
         restrictions:
             - "!SPI_0_MASTER"
+    SPI_1_MASTER:
+        description: 'SPI 1 master'
+        value:  0
+        restrictions:
+            - "!SPI_1_SLAVE"
+    SPI_1_SLAVE:
+        description: 'SPI 1 slave'
+        value:  0
+        restrictions:
+            - "!SPI_1_MASTER"
+    SPI_2_MASTER:
+        description: 'SPI 2 master'
+        value:  0
+        restrictions:
+            - "!SPI_2_SLAVE"
+    SPI_2_SLAVE:
+        description: 'SPI 2 slave'
+        value:  0
+        restrictions:
+            - "!SPI_2_MASTER"
+    SPI_3_MASTER:
+        description: 'SPI 3 master'
+        value:  0
+        restrictions:
+            - "!SPI_3_SLAVE"
+    SPI_3_SLAVE:
+        description: 'SPI 3 slave'
+        value:  0
+        restrictions:
+            - "!SPI_3_MASTER"
+    SPI_4_MASTER:
+        description: 'SPI 4 master'
+        value:  0
+        restrictions:
+            - "!SPI_4_SLAVE"
+    SPI_4_SLAVE:
+        description: 'SPI 4 slave'
+        value:  0
+        restrictions:
+            - "!SPI_4_MASTER"
     I2C_0:
         description: 'I2C (TWI) interface 0'
         value:  0

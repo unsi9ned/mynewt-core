@@ -197,7 +197,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
-
+#include "syscfg/syscfg.h"
 /** @addtogroup STM32F4xx_HAL_Driver
   * @{
   */
@@ -844,6 +844,7 @@ HAL_StatusTypeDef HAL_SPI_Transmit(SPI_HandleTypeDef *hspi, uint8_t *pData, uint
     }
     while (hspi->TxXferCount > 0U)
     {
+#if MYNEWT_VAL(SPI_STM32_USE_TO_API)
       /* Wait until TXE flag is set to send data */
       if (__HAL_SPI_GET_FLAG(hspi, SPI_FLAG_TXE))
       {
@@ -860,6 +861,12 @@ HAL_StatusTypeDef HAL_SPI_Transmit(SPI_HandleTypeDef *hspi, uint8_t *pData, uint
           goto error;
         }
       }
+#else
+      while(!__HAL_SPI_GET_FLAG(hspi, SPI_FLAG_TXE));
+      *((__IO uint8_t*)&hspi->Instance->DR) = (*pData);
+      pData += sizeof(uint8_t);
+      hspi->TxXferCount--;
+#endif
     }
   }
 #if (USE_SPI_CRC != 0U)
@@ -1215,6 +1222,7 @@ HAL_StatusTypeDef HAL_SPI_TransmitReceive(SPI_HandleTypeDef *hspi, uint8_t *pTxD
   /* Transmit and Receive data in 8 Bit mode */
   else
   {
+#if MYNEWT_VAL(SPI_STM32_USE_TO_API)
     if ((hspi->Init.Mode == SPI_MODE_SLAVE) || (initial_TxXferCount == 0x01U))
     {
       *((__IO uint8_t *)&hspi->Instance->DR) = (*hspi->pTxBuffPtr);
@@ -1256,6 +1264,17 @@ HAL_StatusTypeDef HAL_SPI_TransmitReceive(SPI_HandleTypeDef *hspi, uint8_t *pTxD
         goto error;
       }
     }
+#else
+    while((hspi->TxXferCount-- > 0U)) {
+        /* check TXE flag */
+        while(!__HAL_SPI_GET_FLAG(hspi, SPI_FLAG_TXE));
+        *(__IO uint8_t *)&hspi->Instance->DR = (*pTxData++);
+
+        /* Wait until RXNE flag is reset */
+        while(!__HAL_SPI_GET_FLAG(hspi, SPI_FLAG_RXNE));
+        (*(uint8_t *)pRxData++) = hspi->Instance->DR;
+    }
+#endif
   }
 
 #if (USE_SPI_CRC != 0U)

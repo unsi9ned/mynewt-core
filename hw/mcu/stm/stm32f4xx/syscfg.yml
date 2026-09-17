@@ -138,6 +138,10 @@ syscfg.defs:
         restrictions:
             - "!SPI_0_MASTER"
 
+    SPI_STM32_USE_TO_API:
+        description: 'Enable the timeout api in the hal_spi_transmit and transmitreceive functons'
+        value:  0
+
     TRNG:
         description: 'True Random Number Generator (RNG)'
         value: 0

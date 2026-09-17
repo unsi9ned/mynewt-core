@@ -509,7 +509,7 @@ hal_timer_config(int num, uint32_t freq_hz)
 
     memset(&init, 0, sizeof(init));
     init.Period = 0xffff;
-    init.Prescaler = prescaler;
+    init.Prescaler = prescaler - 1;
     init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
     init.CounterMode = TIM_COUNTERMODE_UP;
 

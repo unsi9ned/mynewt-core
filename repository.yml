@@ -35,7 +35,7 @@ repo.versions:
     "1.4.1": "mynewt_1_4_1_tag"
     "1.5.0": "mynewt_1_5_0_tag"
     "1.6.0": "mynewt_1_6_0_tag"
-    "1.7.0": "mynewt_1_7_0_tag"
+    "1.7.0": "mynewt_1_7_0_rc2_patched"
 
     "0-latest": "1.7.0"
     "1-latest": "1.7.0"
